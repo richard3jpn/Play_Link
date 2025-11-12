@@ -11,39 +11,50 @@ Play_Linkは、野球クラブの運営を効率化するための統合管理�
 ## 🛠 技術スタック
 
 - **フロントエンド**: React (TypeScript)
-- **バックエンド**: Node.js (Firebase Cloud Functions)
-- **データベース**: Firestore (NoSQL)
+- **データベース**: PostgreSQL
+- **バックエンドAPI**: Firebase Data Connect（PostgreSQLへの安全なアクセスAPI）
+- **バックエンドロジック**: Node.js (Firebase Cloud Functions)
 - **認証**: Firebase Authentication
 - **ホスティング**: Firebase Hosting
 - **デプロイ/管理**: Firebase CLI
+- **ローカル開発**: Firebase Emulators（PostgreSQLエミュレータ含む）
 
 ## 📂 プロジェクト構造
 
 ```
 Play_Link/
 ├── README.md                    # このファイル
-├── RDD.md                       # 要件定義書（機能仕様）
+├── RDD_postgreSQL.md            # 要件定義書（機能仕様）
 ├── Agent.md                     # AI Agent向け開発ガイド
 │
 ├── setup/                       # セットアップ関連
 │   ├── setup.sh                 # 自動セットアップスクリプト
 │   └── SETUP.md                 # セットアップ手順書
 │
-├── app/                         # React フロントエンド（未作成）
+├── app/                         # React フロントエンド
 │   ├── src/
+│   │   ├── generated/           # Data Connect SDK（自動生成）
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── firebase.ts          # Firebase初期化
 │   ├── public/
 │   └── package.json
 │
-├── functions/                   # Cloud Functions バックエンド（未作成）
+├── functions/                   # Cloud Functions バックエンド
 │   ├── src/
+│   │   ├── index.ts
+│   │   └── db.ts                # PostgreSQL接続
 │   └── package.json
 │
-├── firestore/                   # Firestore設定
-│   ├── firestore.rules          # セキュリティルール
-│   └── firestore.indexes.json   # インデックス定義
+├── dataconnect/                 # Data Connect 設定
+│   ├── schema/
+│   │   └── schema.gql           # PostgreSQLテーブル定義
+│   └── connector/
+│       ├── queries.gql          # GraphQLクエリ定義
+│       └── mutations.gql        # GraphQLミューテーション定義
 │
 ├── firebase.json                # Firebase設定ファイル
-└── .firebaserc                  # Firebaseプロジェクト情報（未作成）
+└── .firebaserc                  # Firebaseプロジェクト情報
 ```
 
 ## 🚀 クイックスタート
@@ -56,28 +67,66 @@ Play_Link/
 
 ### セットアップ手順
 
-1. **自動セットアップスクリプトを実行**
+1. **Firebase にログイン**
 
 ```bash
-./setup/setup.sh
+npx firebase login
 ```
 
-2. **詳細なセットアップ手順を確認**
+2. **Firebase プロジェクト初期化**
 
-詳しい手順は [setup/SETUP.md](setup/SETUP.md) を参照してください。
+```bash
+npx firebase init
+```
+
+選択項目：
+- ✅ Data Connect: Firebase Data Connect
+- ✅ Functions: Cloud Functions for Firebase
+- ✅ Hosting: Firebase Hosting
+- ✅ Emulators: Firebase Emulators
+
+3. **依存関係のインストール**
+
+```bash
+# フロントエンド
+cd app
+npm install
+
+# バックエンド
+cd ../functions
+npm install
+```
+
+4. **Data Connect SDK 生成**
+
+```bash
+cd ..
+npx firebase dataconnect:sdk:generate
+```
+
+5. **エミュレータで起動確認**
+
+```bash
+npx firebase emulators:start
+```
+
+エミュレータUI: http://localhost:4050
 
 ## 📚 ドキュメント
 
-### [RDD.md](RDD.md) - 要件定義書
+### [RDD_postgreSQL.md](RDD_postgreSQL.md) - 要件定義書
 - プロジェクトの全機能仕様
-- データベース設計
+- PostgreSQLデータベース設計
+- Firebase Data Connect アーキテクチャ
 - ユーザー要件
 
 ### [Agent.md](Agent.md) - AI Agent向け開発ガイド
-- React + Firebase アプリの開発手順
+- React + Firebase + PostgreSQL アプリの開発手順
+- Firebase Data Connect の使い方
+- GraphQLスキーマ定義方法
+- Data Connect SDK の使用方法
+- Cloud Functions での PostgreSQL 接続
 - Firebase CLI コマンド
-- Firestore データ操作方法
-- Cloud Functions 開発方法
 
 ### [setup/SETUP.md](setup/SETUP.md) - セットアップガイド
 - 環境構築の詳細手順
@@ -115,14 +164,17 @@ Play_Link/
 ### セットアップ
 
 ```bash
-# 自動セットアップ
-./setup/setup.sh
-
 # Firebase ログイン
 npx firebase login
 
 # Firebase 初期化
 npx firebase init
+
+# Data Connect 初期化
+npx firebase init dataconnect
+
+# SDK 生成
+npx firebase dataconnect:sdk:generate
 ```
 
 ### フロントエンド開発
@@ -152,6 +204,19 @@ npm run build
 npm run serve
 ```
 
+### Data Connect 開発
+
+```bash
+# スキーマ編集後、SDK を再生成
+npx firebase dataconnect:sdk:generate
+
+# スキーマの差分確認
+npx firebase dataconnect:sql:diff
+
+# Data Connect エミュレータ起動
+npx firebase emulators:start --only dataconnect
+```
+
 ### Firebase エミュレータ
 
 ```bash
@@ -159,6 +224,10 @@ npm run serve
 npx firebase emulators:start
 
 # エミュレータUI: http://localhost:4050
+# Data Connect: http://localhost:9399
+# Functions: http://localhost:5051
+# Auth: http://localhost:9199
+# Hosting: http://localhost:5050
 ```
 
 ### デプロイ
@@ -167,48 +236,129 @@ npx firebase emulators:start
 # 全体デプロイ
 npx firebase deploy
 
+# Data Connect のみ
+npx firebase deploy --only dataconnect
+
 # Functions のみ
 npx firebase deploy --only functions
 
-# Firestore ルールのみ
-npx firebase deploy --only firestore:rules
+# Hosting のみ
+npx firebase deploy --only hosting
 ```
+
+## 🗄️ データベース構造（PostgreSQL）
+
+### 主要テーブル
+
+- **users** - ユーザー情報
+- **teams** - チーム情報
+- **team_members** - ユーザーとチームの紐付け（中間テーブル）
+- **players** - 選手名簿
+- **games** - 試合情報
+- **game_lineups** - スタメン・ベンチ情報
+- **game_plays** - 一球ごとの記録
+- **player_stats** - 集計済み選手成績
+- **articles** - HP用記事
+- **schedules** - スケジュール
+
+詳細は [RDD_postgreSQL.md](RDD_postgreSQL.md) の「4. データベース設計」を参照。
+
+## 📡 Data Connect の利点
+
+### 従来のFirestore方式と比較して：
+
+**✅ メリット**
+- リレーショナルデータベースの強力な機能（JOIN、トランザクション）
+- 複雑な集計クエリが簡単
+- データ整合性が保証される（外部キー制約）
+- GraphQLによる型安全なAPI
+- 自動生成されるTypeScript SDK
+
+**Firebase Data Connectの特徴**
+- PostgreSQLへの安全なアクセスAPI
+- GraphQLスキーマからテーブルとAPIを自動生成
+- Firebase Authenticationとシームレスな統合
+- ローカル開発用のエミュレータ完備
 
 ## 🔒 セキュリティ
 
-- `.env` ファイルは絶対にコミットしない
-- Firestore セキュリティルールは本番環境で厳格化必須
+- `.env` ファイルは絶対にコミットしない（`.gitignore`に追加済み）
+- Data Connect は自動的に認証状態を考慮したクエリを生成
 - Cloud Functions には認証チェックを実装
+- PostgreSQL接続は Data Connect 経由で安全に実行
 
 ## 📝 開発状況
 
 ### ✅ 完了
-- 要件定義書作成
+- 要件定義書作成（PostgreSQL版）
 - プロジェクト構造設計
-- セットアップスクリプト作成
-- 開発ガイド作成
+- 開発ガイド作成（PostgreSQL + Data Connect版）
 - Firebase設定ファイル作成
+- 基本的な環境構築
 
-### 🚧 未着手
+### 🚧 進行中
+- Data Connect スキーマ定義
 - React アプリケーション実装
 - Cloud Functions 実装
-- Firebase プロジェクト作成
+
+### 📋 未着手
 - 実際のデプロイ
+- 本番環境での動作確認
 
 ## 🤝 開発フロー
 
-1. **要件確認**: `RDD.md` で機能仕様を確認
-2. **環境構築**: `setup/SETUP.md` に従ってセットアップ
-3. **開発**: `Agent.md` を参照しながら実装
-4. **テスト**: エミュレータで動作確認
-5. **デプロイ**: Firebase へデプロイ
+1. **要件確認**: `RDD_postgreSQL.md` で機能仕様を確認
+2. **環境構築**: Firebase CLI でプロジェクト初期化
+3. **スキーマ定義**: `dataconnect/schema/schema.gql` でテーブル定義
+4. **SDK生成**: `npx firebase dataconnect:sdk:generate`
+5. **開発**: `Agent.md` を参照しながら実装
+6. **テスト**: エミュレータで動作確認
+7. **デプロイ**: Firebase へデプロイ
 
-## 📞 サポート
+## 🔄 開発ワークフロー例
 
-問題が発生した場合：
-1. `setup/SETUP.md` のトラブルシューティングを確認
-2. `Agent.md` の該当セクションを確認
-3. Firebase公式ドキュメントを参照
+```bash
+# 1. スキーマを編集
+vim dataconnect/schema/schema.gql
+
+# 2. SDKを再生成
+npx firebase dataconnect:sdk:generate
+
+# 3. エミュレータで確認
+npx firebase emulators:start
+
+# 4. フロントエンドで実装
+cd app
+npm start
+
+# 5. 動作確認後、デプロイ
+npx firebase deploy
+```
+
+## 📞 サポート・トラブルシューティング
+
+### よくある問題
+
+**Data Connect エミュレータが起動しない**
+- `firebase.json` の設定を確認
+- ポート競合がないか確認（デフォルト: 9399）
+
+**SDK生成エラー**
+- `dataconnect/schema/schema.gql` の構文エラーを確認
+- GraphQLスキーマの型定義が正しいか確認
+
+**PostgreSQL接続エラー**
+- エミュレータが起動しているか確認
+- 環境変数（DB接続情報）が正しいか確認
+
+詳細は `Agent.md` の「15. トラブルシュート」を参照。
+
+## 📖 参考リンク
+
+- [Firebase Data Connect ドキュメント](https://firebase.google.com/docs/data-connect)
+- [Firebase Emulators](https://firebase.google.com/docs/emulator-suite)
+- [PostgreSQL ドキュメント](https://www.postgresql.org/docs/)
+- [GraphQL 公式サイト](https://graphql.org/)
 
 ## 📄 ライセンス
 
@@ -216,4 +366,4 @@ npx firebase deploy --only firestore:rules
 
 ---
 
-**次のステップ: `setup/SETUP.md` を参照してセットアップを開始してください！**
+**次のステップ: `Agent.md` を参照して開発を開始してください！**

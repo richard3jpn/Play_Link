@@ -1,25 +1,29 @@
 {
   "firestore": {
+    "database": "(default)",
+    "location": "asia-northeast1",
     "rules": "firestore/firestore.rules",
     "indexes": "firestore/firestore.indexes.json"
   },
   "functions": [
     {
-      "source": "functions",
       "codebase": "default",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
-        "firebase-debug.*.log"
+        "firebase-debug.*.log",
+        "*.local"
       ],
       "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
         "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
+      ],
+      "source": "functions"
     }
   ],
   "hosting": {
-    "public": "app/build",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -49,6 +53,19 @@
       "enabled": true,
       "port": 4050
     },
-    "singleProjectMode": true
+    "singleProjectMode": true,
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData",
+      "port": 9399
+    },
+    "storage": {
+      "port": 9191
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

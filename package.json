@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "firebase-tools": "^14.24.1"
   }
 }

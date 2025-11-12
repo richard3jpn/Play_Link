@@ -55,7 +55,6 @@ fi
 echo ""
 echo "[3/6] プロジェクト構造を作成中..."
 
-mkdir -p app/src
 mkdir -p functions/src
 mkdir -p firestore
 

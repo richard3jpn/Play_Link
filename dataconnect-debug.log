@@ -1,0 +1,19 @@
+I1111 15:38:42.836628   22271 load.go:31] Reloading schema and connectors...
+I1111 15:38:42.865497   22271 control.go:94] [/emulator/playlink 83c1] UpdateResources(): done
+Main schema: sources: schema/schema.gql [1992B] 
+Connector "example": sources: example/mutations.gql [1243B] example/queries.gql [1801B] 
+I1111 15:38:42.887777   22271 codegen.go:80] [connector "example" javascriptSdk] Generating sources into "/home/hiasano/hiasano/myapps/Play_Link/src/dataconnect-generated"
+I1111 15:38:42.892646   22271 codegen.go:80] [connector "example" adminSdk] Generating sources into "/home/hiasano/hiasano/myapps/Play_Link/functions/src/dataconnect-admin-generated"
+I1111 15:38:42.894171   22271 collector.go:107] schema extensions wrote into "/home/hiasano/hiasano/myapps/Play_Link/dataconnect/.dataconnect/schema"
+Generated sources: main/input.gql [28173B] prelude.gql [73219B] main/relation.gql [14318B] main/query.gql [5099B] main/mutation.gql [13679B] main/implicit.gql [1261B] 
+I1111 15:38:42.894734   22271 collector.go:107] connector "example" javascriptSdk wrote into "/home/hiasano/hiasano/myapps/Play_Link/src/dataconnect-generated"
+Generated sources: README.md [40804B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [8025B] esm/index.esm.js [3558B] package.json [637B] .guides/usage.md [1705B] esm/package.json [17B] index.cjs.js [4048B] 
+I1111 15:38:42.895556   22271 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+I1111 15:38:42.896265   22271 collector.go:107] connector "example" adminSdk wrote into "/home/hiasano/hiasano/myapps/Play_Link/functions/src/dataconnect-admin-generated"
+Generated sources: esm/index.esm.js [2987B] esm/package.json [17B] index.cjs.js [3280B] package.json [632B] index.d.ts [7666B] 
+I1111 15:38:42.896999   22271 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+I1111 15:38:42.897041   22271 load.go:109] Finished reloading
+I1111 15:38:42.914680   22271 dev.go:105] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I1111 15:38:47.022892   22271 control.go:94] [/emulator/playlink 507c] UpdateResources(): done
+Main schema: sources: schema/schema.gql [1992B] 
+Connector "example": sources: example/queries.gql [1801B] example/mutations.gql [1243B] 
