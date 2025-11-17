@@ -4,13 +4,10 @@ import {
   getTeams,
   createTeam,
   updateTeam,
-  type GetTeamBySlugVariables,
   type CreateTeamVariables,
   type UpdateTeamVariables,
   type GetTeamBySlugData,
-  type GetTeamsData,
-  type CreateTeamData,
-  type UpdateTeamData
+  type GetTeamsData
 } from '../generated';
 
 /**

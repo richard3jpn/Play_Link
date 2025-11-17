@@ -5,8 +5,6 @@ import {
   createPlayer,
   updatePlayer,
   deactivatePlayer,
-  type GetPlayersByTeamVariables,
-  type GetPlayerDetailVariables,
   type CreatePlayerVariables,
   type UpdatePlayerVariables,
   type DeactivatePlayerVariables,

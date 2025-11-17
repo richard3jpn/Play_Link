@@ -54,8 +54,6 @@ export const LineupBoard: React.FC<LineupBoardProps> = ({
     return positions;
   });
 
-  const [bench, setBench] = useState<string[]>([]);
-
   /**
    * 選手を打順に配置
    */

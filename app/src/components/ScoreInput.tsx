@@ -2,27 +2,14 @@ import React, { useState } from 'react';
 import { useGameLineups, useGamePlays } from '../hooks/useGames';
 import {
   recordPlay,
-  updatePlay,
   deletePlay,
   type RecordPlayVariables,
-  type UpdatePlayVariables,
   type DeletePlayVariables
 } from '../generated';
 
 interface ScoreInputProps {
   gameId: string;
   readOnly?: boolean;
-}
-
-interface PlayInput {
-  inning: number;
-  isTop: boolean;
-  batterId: string;
-  pitcherId?: string;
-  playType: string;
-  result: string;
-  rbi: number;
-  runsScored: number;
 }
 
 /**
