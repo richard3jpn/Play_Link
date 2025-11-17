@@ -1,52 +1,152 @@
-# Example schema for simple movie review app
+# ⚾ Play Link - PostgreSQL Schema Definition
+# 野球クラブ用統合管理アプリ「プレイリンク」のデータベーススキーマ
 
-# User table is keyed by Firebase Auth UID.
+# ================================================
+# ユーザー・チーム管理
+# ================================================
+
+# ユーザー情報
 type User @table {
-  # `@default(expr: "auth.uid")` sets it to Firebase Auth UID during insert and upsert.
-  id: String! @default(expr: "auth.uid")
-  username: String! @col(dataType: "varchar(50)")
-  # The `user: User!` field in the Review table generates the following one-to-many query field.
-  #  reviews_on_user: [Review!]!
-  # The `Review` join table the following many-to-many query field.
-  #  movies_via_Review: [Movie!]!
+  id: UUID! @default(expr: "uuidV4()")
+  email: String! @col(dataType: "varchar(255)")
+  displayName: String @col(name: "display_name", dataType: "varchar(100)")
+  avatarUrl: String @col(name: "avatar_url")
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
 }
 
-# Movie is keyed by a randomly generated UUID.
-type Movie @table {
-  # If you do not pass a 'key' to `@table`, Data Connect automatically adds the following 'id' column.
-  # Feel free to uncomment and customize it.
-  #  id: UUID! @default(expr: "uuidV4()")
-  title: String!
-  imageUrl: String!
-  genre: String
-}
-
-# MovieMetadata is a metadata attached to a Movie.
-# Movie <-> MovieMetadata is a one-to-one relationship
-type MovieMetadata @table {
-  # @unique ensures each Movie can only one MovieMetadata.
-  movie: Movie! @unique
-  # The movie field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  movieId: UUID!
-  rating: Float
-  releaseYear: Int
+# チーム情報
+type Team @table {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String! @col(dataType: "varchar(100)")
+  slug: String! @col(dataType: "varchar(50)")
+  logoUrl: String @col(name: "logo_url")
   description: String
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
 }
 
-# Reviews is a join table between User and Movie.
-# It has a composite primary keys `userUid` and `movieId`.
-# A user can leave reviews for many movies. A movie can have reviews from many users.
-# User  <-> Review is a one-to-many relationship
-# Movie <-> Review is a one-to-many relationship
-# Movie <-> User is a many-to-many relationship
-type Review @table(name: "Reviews", key: ["movie", "user"]) {
+# チームメンバー（中間テーブル）
+type TeamMember @table(name: "team_members") {
+  id: UUID! @default(expr: "uuidV4()")
   user: User!
-  # The user field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  userUid: String!
-  movie: Movie!
-  # The movie field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  movieId: UUID!
-  rating: Int
-  reviewText: String
-  reviewDate: Date! @default(expr: "request.time")
+  team: Team!
+  role: String! @default(expr: "'member'") @col(dataType: "varchar(20)")
+  joinedAt: Timestamp! @default(expr: "request.time")
+}
+
+# ================================================
+# 選手・スケジュール管理
+# ================================================
+
+# 選手名簿
+type Player @table {
+  id: UUID! @default(expr: "uuidV4()")
+  team: Team!
+  user: User
+  name: String! @col(dataType: "varchar(100)")
+  uniformNumber: Int @col(name: "uniform_number")
+  position: String @col(dataType: "varchar(20)")
+  bats: String @col(dataType: "varchar(10)")
+  throws: String @col(dataType: "varchar(10)")
+  photoUrl: String @col(name: "photo_url")
+  isActive: Boolean! @default(expr: "true")
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# スケジュール
+type Schedule @table {
+  id: UUID! @default(expr: "uuidV4()")
+  team: Team!
+  title: String! @col(dataType: "varchar(200)")
+  eventType: String! @col(name: "event_type", dataType: "varchar(20)")
+  startTime: Timestamp! @col(name: "start_time")
+  endTime: Timestamp @col(name: "end_time")
+  location: String @col(dataType: "varchar(200)")
+  description: String
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# ================================================
+# 試合管理
+# ================================================
+
+# 試合情報
+type Game @table {
+  id: UUID! @default(expr: "uuidV4()")
+  team: Team!
+  schedule: Schedule
+  opponentName: String! @col(name: "opponent_name", dataType: "varchar(100)")
+  gameDate: Date! @col(name: "game_date")
+  location: String @col(dataType: "varchar(200)")
+  isHome: Boolean! @default(expr: "true")
+  homeScore: Int @col(name: "home_score")
+  awayScore: Int @col(name: "away_score")
+  status: String! @default(expr: "'scheduled'") @col(dataType: "varchar(20)")
+  videoUrl: String @col(name: "video_url")
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# スタメン・ベンチ情報
+type GameLineup @table(name: "game_lineups") {
+  id: UUID! @default(expr: "uuidV4()")
+  game: Game!
+  player: Player!
+  battingOrder: Int @col(name: "batting_order")
+  position: String @col(dataType: "varchar(20)")
+  isStarter: Boolean! @default(expr: "true")
+}
+
+# 一球ごとの記録
+type GamePlay @table(name: "game_plays") {
+  id: UUID! @default(expr: "uuidV4()")
+  game: Game!
+  inning: Int!
+  isTop: Boolean! @col(name: "is_top")
+  batter: Player!
+  pitcher: Player
+  playType: String! @col(name: "play_type", dataType: "varchar(30)")
+  result: String! @col(dataType: "varchar(50)")
+  rbi: Int! @default(expr: "0")
+  runsScored: Int! @default(expr: "0") @col(name: "runs_scored")
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+# ================================================
+# 成績・広報
+# ================================================
+
+# 選手成績集計
+type PlayerStats @table(name: "player_stats", key: ["player", "season"]) {
+  player: Player!
+  season: Int!
+  gamesPlayed: Int! @default(expr: "0") @col(name: "games_played")
+  atBats: Int! @default(expr: "0") @col(name: "at_bats")
+  hits: Int! @default(expr: "0")
+  doubles: Int! @default(expr: "0")
+  triples: Int! @default(expr: "0")
+  homeRuns: Int! @default(expr: "0") @col(name: "home_runs")
+  rbi: Int! @default(expr: "0")
+  walks: Int! @default(expr: "0")
+  strikeouts: Int! @default(expr: "0")
+  battingAverage: Float @col(name: "batting_average", dataType: "decimal(4,3)")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# 記事・ブログ
+type Article @table {
+  id: UUID! @default(expr: "uuidV4()")
+  team: Team!
+  author: User!
+  linkedGame: Game
+  title: String! @col(dataType: "varchar(200)")
+  content: String!
+  thumbnailUrl: String @col(name: "thumbnail_url")
+  isPublished: Boolean! @default(expr: "false")
+  publishedAt: Timestamp @col(name: "published_at")
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
 }

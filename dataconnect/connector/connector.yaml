@@ -1,0 +1,5 @@
+connectorId: "playlink-connector"
+generate:
+  javascriptSdk:
+    outputDir: "../../app/src/generated"
+    package: "@playlink/dataconnect"

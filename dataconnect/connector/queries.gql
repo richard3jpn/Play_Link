@@ -1,0 +1,354 @@
+# ⚾ Play Link - GraphQL Queries
+# 野球クラブ用統合管理アプリ「プレイリンク」のデータ取得クエリ
+
+# ================================================
+# チーム関連クエリ
+# ================================================
+
+# チーム情報取得（スラッグ指定）
+query GetTeamBySlug($slug: String!) @auth(level: PUBLIC) {
+  teams(where: { slug: { eq: $slug } }) {
+    id
+    name
+    slug
+    logoUrl
+    description
+    createdAt
+  }
+}
+
+# チーム一覧取得
+query GetTeams @auth(level: PUBLIC) {
+  teams(orderBy: { createdAt: DESC }) {
+    id
+    name
+    slug
+    logoUrl
+    description
+  }
+}
+
+# ================================================
+# 試合関連クエリ
+# ================================================
+
+# 試合一覧取得（アーカイブ用）
+query GetGamesByTeam($teamId: UUID!, $limit: Int) @auth(level: PUBLIC) {
+  games(
+    where: {
+      teamId: { eq: $teamId }
+      status: { eq: "final" }
+    }
+    orderBy: { gameDate: DESC }
+    limit: $limit
+  ) {
+    id
+    opponentName
+    gameDate
+    homeScore
+    awayScore
+    isHome
+    location
+    videoUrl
+  }
+}
+
+# 試合詳細取得（ボックススコア）
+query GetGameDetail($gameId: UUID!) @auth(level: PUBLIC) {
+  game(id: $gameId) {
+    id
+    opponentName
+    gameDate
+    location
+    homeScore
+    awayScore
+    isHome
+    status
+    videoUrl
+    createdAt
+  }
+}
+
+# 試合のスタメン・ベンチ情報取得
+query GetGameLineups($gameId: UUID!) @auth(level: PUBLIC) {
+  gameLineups(
+    where: { gameId: { eq: $gameId } }
+    orderBy: { battingOrder: ASC }
+  ) {
+    id
+    battingOrder
+    position
+    isStarter
+    player {
+      id
+      name
+      uniformNumber
+      position
+    }
+  }
+}
+
+# 試合のプレイ記録取得
+query GetGamePlays($gameId: UUID!) @auth(level: PUBLIC) {
+  gamePlays(
+    where: { gameId: { eq: $gameId } }
+    orderBy: [{ inning: ASC }, { createdAt: ASC }]
+  ) {
+    id
+    inning
+    isTop
+    batter {
+      id
+      name
+      uniformNumber
+    }
+    pitcher {
+      id
+      name
+    }
+    playType
+    result
+    rbi
+    runsScored
+    createdAt
+  }
+}
+
+# 次回の試合予定取得
+query GetUpcomingGames($teamId: UUID!, $limit: Int) @auth(level: PUBLIC) {
+  games(
+    where: {
+      teamId: { eq: $teamId }
+      status: { in: ["scheduled", "ongoing"] }
+    }
+    orderBy: { gameDate: ASC }
+    limit: $limit
+  ) {
+    id
+    opponentName
+    gameDate
+    location
+    isHome
+    status
+  }
+}
+
+# ================================================
+# 選手関連クエリ
+# ================================================
+
+# 選手一覧取得
+query GetPlayersByTeam($teamId: UUID!) @auth(level: PUBLIC) {
+  players(
+    where: {
+      teamId: { eq: $teamId }
+      isActive: { eq: true }
+    }
+    orderBy: { uniformNumber: ASC }
+  ) {
+    id
+    name
+    uniformNumber
+    position
+    bats
+    throws
+    photoUrl
+    isActive
+  }
+}
+
+# 選手詳細取得
+query GetPlayerDetail($playerId: UUID!) @auth(level: PUBLIC) {
+  player(id: $playerId) {
+    id
+    name
+    uniformNumber
+    position
+    bats
+    throws
+    photoUrl
+    isActive
+    team {
+      id
+      name
+      logoUrl
+    }
+  }
+}
+
+# ================================================
+# 成績関連クエリ
+# ================================================
+
+# 選手成績取得
+query GetPlayerStats($playerId: UUID!, $season: Int!) @auth(level: PUBLIC) {
+  playerStats(key: { playerId: $playerId, season: $season }) {
+    season
+    gamesPlayed
+    atBats
+    hits
+    doubles
+    triples
+    homeRuns
+    rbi
+    walks
+    strikeouts
+    battingAverage
+    updatedAt
+  }
+}
+
+# チーム全体の成績取得（シーズン指定）
+query GetTeamStats($teamId: UUID!, $season: Int!) @auth(level: PUBLIC) {
+  players(where: { teamId: { eq: $teamId } }) {
+    id
+    name
+    uniformNumber
+    position
+  }
+}
+
+# ================================================
+# 記事関連クエリ
+# ================================================
+
+# 記事一覧取得（公開済みのみ）
+query GetPublishedArticles($teamId: UUID!, $limit: Int) @auth(level: PUBLIC) {
+  articles(
+    where: {
+      teamId: { eq: $teamId }
+      isPublished: { eq: true }
+    }
+    orderBy: { publishedAt: DESC }
+    limit: $limit
+  ) {
+    id
+    title
+    content
+    thumbnailUrl
+    publishedAt
+    author {
+      displayName
+      avatarUrl
+    }
+    linkedGame {
+      id
+      opponentName
+      gameDate
+      homeScore
+      awayScore
+    }
+  }
+}
+
+# 記事詳細取得
+query GetArticleDetail($articleId: UUID!) @auth(level: PUBLIC) {
+  article(id: $articleId) {
+    id
+    title
+    content
+    thumbnailUrl
+    isPublished
+    publishedAt
+    createdAt
+    author {
+      id
+      displayName
+      avatarUrl
+    }
+    linkedGame {
+      id
+      opponentName
+      gameDate
+      homeScore
+      awayScore
+    }
+  }
+}
+
+# 管理画面用：すべての記事取得（下書き含む）
+query GetAllArticles($teamId: UUID!) @auth(level: USER) {
+  articles(
+    where: { teamId: { eq: $teamId } }
+    orderBy: { createdAt: DESC }
+  ) {
+    id
+    title
+    isPublished
+    publishedAt
+    createdAt
+    author {
+      displayName
+    }
+  }
+}
+
+# ================================================
+# スケジュール関連クエリ
+# ================================================
+
+# スケジュール一覧取得
+query GetSchedules($teamId: UUID!, $startDate: Timestamp!, $endDate: Timestamp!) @auth(level: USER) {
+  schedules(
+    where: {
+      teamId: { eq: $teamId }
+      startTime: { ge: $startDate, le: $endDate }
+    }
+    orderBy: { startTime: ASC }
+  ) {
+    id
+    title
+    eventType
+    startTime
+    endTime
+    location
+    description
+  }
+}
+
+# 今後のスケジュール取得（使用しない - request.timeの使い方に問題あり）
+# query GetUpcomingSchedules($teamId: UUID!, $limit: Int) @auth(level: USER) {
+#   schedules(
+#     where: {
+#       teamId: { eq: $teamId }
+#       startTime: { ge: "request.time" }
+#     }
+#     orderBy: { startTime: ASC }
+#     limit: $limit
+#   ) {
+#     id
+#     title
+#     eventType
+#     startTime
+#     location
+#   }
+# }
+
+# ================================================
+# ユーザー・メンバー関連クエリ
+# ================================================
+
+# ユーザー情報取得
+query GetUserProfile($userId: UUID!) @auth(level: USER) {
+  user(id: $userId) {
+    id
+    email
+    displayName
+    avatarUrl
+  }
+}
+
+# チームメンバー一覧取得
+query GetTeamMembers($teamId: UUID!) @auth(level: USER) {
+  teamMembers(where: { teamId: { eq: $teamId } }) {
+    id
+    role
+    joinedAt
+    user {
+      id
+      displayName
+      email
+      avatarUrl
+    }
+  }
+}

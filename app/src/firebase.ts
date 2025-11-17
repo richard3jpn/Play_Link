@@ -1,9 +1,10 @@
 // Firebase SDK のインポート
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 import { getAnalytics } from 'firebase/analytics';
+import { getDataConnect, connectDataConnectEmulator } from 'firebase/data-connect';
+import { connectorConfig } from './generated';
 
 // Firebase設定（環境変数から取得）
 const firebaseConfig = {
@@ -16,14 +17,38 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
+// 環境変数チェック
+console.log('🔍 Firebase設定チェック:', {
+  apiKey: firebaseConfig.apiKey ? '✓' : '✗',
+  projectId: firebaseConfig.projectId,
+  appId: firebaseConfig.appId ? '✓' : '✗'
+});
+
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
+console.log('✅ Firebase アプリを初期化しました');
 
 // サービスのインスタンスを取得
-export const db = getFirestore(app);           // Firestore
-export const auth = getAuth(app);              // Authentication
-export const functions = getFunctions(app);    // Cloud Functions
-export const analytics = getAnalytics(app);    // Analytics
+export const auth = getAuth(app);
+export const functions = getFunctions(app);
+export const dataConnect = getDataConnect(app, connectorConfig);
 
-// デフォルトエクスポート（必要に応じて）
+// Analytics（ブラウザ環境かつ本番環境のみ）
+export let analytics: ReturnType<typeof getAnalytics> | undefined;
+if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
+  try {
+    analytics = getAnalytics(app);
+    console.log('📊 Analytics を初期化しました');
+  } catch (error) {
+    console.warn('Analytics の初期化をスキップしました:', error);
+  }
+}
+
+// エミュレーター接続設定（開発環境のみ）
+if (process.env.NODE_ENV === 'development') {
+  connectDataConnectEmulator(dataConnect, 'localhost', 9399);
+  console.log('🔧 Data Connect エミュレーターに接続しました (localhost:9399)');
+}
+
+// デフォルトエクスポート
 export default app;

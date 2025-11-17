@@ -1,0 +1,462 @@
+# ⚾ Play Link - GraphQL Mutations
+# 野球クラブ用統合管理アプリ「プレイリンク」のデータ更新ミューテーション
+
+# ================================================
+# チーム管理
+# ================================================
+
+# チーム作成
+mutation CreateTeam($name: String!, $slug: String!, $logoUrl: String, $description: String) @auth(level: USER) {
+  team_insert(data: {
+    name: $name
+    slug: $slug
+    logoUrl: $logoUrl
+    description: $description
+  })
+}
+
+# チーム情報更新
+mutation UpdateTeam($teamId: UUID!, $name: String, $logoUrl: String, $description: String) @auth(level: USER) {
+  team_update(
+    id: $teamId
+    data: {
+      name: $name
+      logoUrl: $logoUrl
+      description: $description
+    }
+  )
+}
+
+# ================================================
+# 選手管理
+# ================================================
+
+# 選手登録
+mutation CreatePlayer(
+  $teamId: UUID!
+  $name: String!
+  $uniformNumber: Int
+  $position: String
+  $bats: String
+  $throws: String
+  $photoUrl: String
+) @auth(level: USER) {
+  player_insert(data: {
+    teamId: $teamId
+    name: $name
+    uniformNumber: $uniformNumber
+    position: $position
+    bats: $bats
+    throws: $throws
+    photoUrl: $photoUrl
+  })
+}
+
+# 選手情報更新
+mutation UpdatePlayer(
+  $playerId: UUID!
+  $name: String
+  $uniformNumber: Int
+  $position: String
+  $bats: String
+  $throws: String
+  $photoUrl: String
+  $isActive: Boolean
+) @auth(level: USER) {
+  player_update(
+    id: $playerId
+    data: {
+      name: $name
+      uniformNumber: $uniformNumber
+      position: $position
+      bats: $bats
+      throws: $throws
+      photoUrl: $photoUrl
+      isActive: $isActive
+    }
+  )
+}
+
+# 選手削除（論理削除）
+mutation DeactivatePlayer($playerId: UUID!) @auth(level: USER) {
+  player_update(
+    id: $playerId
+    data: { isActive: false }
+  )
+}
+
+# ================================================
+# 試合管理
+# ================================================
+
+# 試合作成
+mutation CreateGame(
+  $teamId: UUID!
+  $opponentName: String!
+  $gameDate: Date!
+  $location: String
+  $isHome: Boolean
+) @auth(level: USER) {
+  game_insert(data: {
+    teamId: $teamId
+    opponentName: $opponentName
+    gameDate: $gameDate
+    location: $location
+    isHome: $isHome
+    status: "scheduled"
+  })
+}
+
+# 試合情報更新
+mutation UpdateGame(
+  $gameId: UUID!
+  $opponentName: String
+  $gameDate: Date
+  $location: String
+  $videoUrl: String
+) @auth(level: USER) {
+  game_update(
+    id: $gameId
+    data: {
+      opponentName: $opponentName
+      gameDate: $gameDate
+      location: $location
+      videoUrl: $videoUrl
+    }
+  )
+}
+
+# 試合ステータス更新（試合終了時）
+mutation FinalizeGame($gameId: UUID!, $homeScore: Int!, $awayScore: Int!) @auth(level: USER) {
+  game_update(
+    id: $gameId
+    data: {
+      status: "final"
+      homeScore: $homeScore
+      awayScore: $awayScore
+    }
+  )
+}
+
+# 試合開始
+mutation StartGame($gameId: UUID!) @auth(level: USER) {
+  game_update(
+    id: $gameId
+    data: { status: "ongoing" }
+  )
+}
+
+# ================================================
+# スタメン・ベンチ登録
+# ================================================
+
+# スタメン登録（単一）
+mutation CreateLineupEntry(
+  $gameId: UUID!
+  $playerId: UUID!
+  $battingOrder: Int
+  $position: String
+  $isStarter: Boolean
+) @auth(level: USER) {
+  gameLineup_insert(data: {
+    gameId: $gameId
+    playerId: $playerId
+    battingOrder: $battingOrder
+    position: $position
+    isStarter: $isStarter
+  })
+}
+
+# スタメン一括登録（使用しない - Data Connectの制限により配列型変数は使えない）
+# mutation CreateLineups($lineups: [GameLineup_Data!]!) @auth(level: USER) {
+#   gameLineup_insertMany(data: $lineups)
+# }
+
+# スタメン更新
+mutation UpdateLineup(
+  $lineupId: UUID!
+  $battingOrder: Int
+  $position: String
+) @auth(level: USER) {
+  gameLineup_update(
+    id: $lineupId
+    data: {
+      battingOrder: $battingOrder
+      position: $position
+    }
+  )
+}
+
+# スタメン削除
+mutation DeleteLineup($lineupId: UUID!) @auth(level: USER) {
+  gameLineup_delete(id: $lineupId)
+}
+
+# ================================================
+# スコア入力（一球ごとの記録）
+# ================================================
+
+# プレイ記録追加
+mutation RecordPlay(
+  $gameId: UUID!
+  $inning: Int!
+  $isTop: Boolean!
+  $batterId: UUID!
+  $pitcherId: UUID
+  $playType: String!
+  $result: String!
+  $rbi: Int
+  $runsScored: Int
+) @auth(level: USER) {
+  gamePlay_insert(data: {
+    gameId: $gameId
+    inning: $inning
+    isTop: $isTop
+    batterId: $batterId
+    pitcherId: $pitcherId
+    playType: $playType
+    result: $result
+    rbi: $rbi
+    runsScored: $runsScored
+  })
+}
+
+# プレイ記録更新
+mutation UpdatePlay(
+  $playId: UUID!
+  $playType: String
+  $result: String
+  $rbi: Int
+  $runsScored: Int
+) @auth(level: USER) {
+  gamePlay_update(
+    id: $playId
+    data: {
+      playType: $playType
+      result: $result
+      rbi: $rbi
+      runsScored: $runsScored
+    }
+  )
+}
+
+# プレイ記録削除
+mutation DeletePlay($playId: UUID!) @auth(level: USER) {
+  gamePlay_delete(id: $playId)
+}
+
+# ================================================
+# 記事管理
+# ================================================
+
+# 記事作成
+mutation CreateArticle(
+  $teamId: UUID!
+  $authorId: UUID!
+  $title: String!
+  $content: String!
+  $thumbnailUrl: String
+  $linkedGameId: UUID
+  $isPublished: Boolean
+) @auth(level: USER) {
+  article_insert(data: {
+    teamId: $teamId
+    authorId: $authorId
+    title: $title
+    content: $content
+    thumbnailUrl: $thumbnailUrl
+    linkedGameId: $linkedGameId
+    isPublished: $isPublished
+  })
+}
+
+# 記事更新
+mutation UpdateArticle(
+  $articleId: UUID!
+  $title: String
+  $content: String
+  $thumbnailUrl: String
+  $linkedGameId: UUID
+) @auth(level: USER) {
+  article_update(
+    id: $articleId
+    data: {
+      title: $title
+      content: $content
+      thumbnailUrl: $thumbnailUrl
+      linkedGameId: $linkedGameId
+    }
+  )
+}
+
+# 記事公開（使用しない - request.timeの使い方に問題あり）
+# mutation PublishArticle($articleId: UUID!) @auth(level: USER) {
+#   article_update(
+#     id: $articleId
+#     data: {
+#       isPublished: true
+#       publishedAt: "request.time"
+#     }
+#   )
+# }
+
+# 記事非公開化
+mutation UnpublishArticle($articleId: UUID!) @auth(level: USER) {
+  article_update(
+    id: $articleId
+    data: { isPublished: false }
+  )
+}
+
+# 記事削除
+mutation DeleteArticle($articleId: UUID!) @auth(level: USER) {
+  article_delete(id: $articleId)
+}
+
+# ================================================
+# スケジュール管理
+# ================================================
+
+# スケジュール作成
+mutation CreateSchedule(
+  $teamId: UUID!
+  $title: String!
+  $eventType: String!
+  $startTime: Timestamp!
+  $endTime: Timestamp
+  $location: String
+  $description: String
+) @auth(level: USER) {
+  schedule_insert(data: {
+    teamId: $teamId
+    title: $title
+    eventType: $eventType
+    startTime: $startTime
+    endTime: $endTime
+    location: $location
+    description: $description
+  })
+}
+
+# スケジュール更新
+mutation UpdateSchedule(
+  $scheduleId: UUID!
+  $title: String
+  $eventType: String
+  $startTime: Timestamp
+  $endTime: Timestamp
+  $location: String
+  $description: String
+) @auth(level: USER) {
+  schedule_update(
+    id: $scheduleId
+    data: {
+      title: $title
+      eventType: $eventType
+      startTime: $startTime
+      endTime: $endTime
+      location: $location
+      description: $description
+    }
+  )
+}
+
+# スケジュール削除
+mutation DeleteSchedule($scheduleId: UUID!) @auth(level: USER) {
+  schedule_delete(id: $scheduleId)
+}
+
+# ================================================
+# ユーザー・メンバー管理
+# ================================================
+
+# ユーザープロフィール更新
+mutation UpdateUserProfile(
+  $userId: UUID!
+  $displayName: String
+  $avatarUrl: String
+) @auth(level: USER) {
+  user_update(
+    id: $userId
+    data: {
+      displayName: $displayName
+      avatarUrl: $avatarUrl
+    }
+  )
+}
+
+# チームメンバー追加
+mutation AddTeamMember(
+  $userId: UUID!
+  $teamId: UUID!
+  $role: String
+) @auth(level: USER) {
+  teamMember_insert(data: {
+    userId: $userId
+    teamId: $teamId
+    role: $role
+  })
+}
+
+# チームメンバーの役割更新
+mutation UpdateTeamMemberRole(
+  $memberId: UUID!
+  $role: String!
+) @auth(level: USER) {
+  teamMember_update(
+    id: $memberId
+    data: { role: $role }
+  )
+}
+
+# チームメンバー削除
+mutation RemoveTeamMember($memberId: UUID!) @auth(level: USER) {
+  teamMember_delete(id: $memberId)
+}
+
+# ================================================
+# 一時的なデータ投入用 (開発環境のみ・後で削除)
+# ================================================
+
+# 選手データ一括登録（開発用・PUBLIC認証）
+mutation SeedPlayer(
+  $teamId: UUID!
+  $name: String!
+  $uniformNumber: Int
+  $position: String
+  $bats: String
+  $throws: String
+) @auth(level: PUBLIC) {
+  player_insert(data: {
+    teamId: $teamId
+    name: $name
+    uniformNumber: $uniformNumber
+    position: $position
+    bats: $bats
+    throws: $throws
+    isActive: true
+  })
+}
+
+# 試合データ登録（開発用・PUBLIC認証）
+mutation SeedGame(
+  $teamId: UUID!
+  $opponentName: String!
+  $gameDate: Date!
+  $location: String
+  $isHome: Boolean!
+  $status: String!
+  $homeScore: Int
+  $awayScore: Int
+) @auth(level: PUBLIC) {
+  game_insert(data: {
+    teamId: $teamId
+    opponentName: $opponentName
+    gameDate: $gameDate
+    location: $location
+    isHome: $isHome
+    status: $status
+    homeScore: $homeScore
+    awayScore: $awayScore
+  })
+}
