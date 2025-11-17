@@ -1,0 +1,322 @@
+/* Home Page スタイル */
+
+.home-page {
+  min-height: 100vh;
+}
+
+/* ヒーローセクション */
+.hero-section {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.team-name {
+  font-size: 48px;
+  font-weight: 900;
+  margin: 0 0 16px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-name img {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+}
+
+.team-slogan {
+  font-size: 20px;
+  opacity: 0.95;
+  margin: 0;
+}
+
+/* 共通コンテナ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* セクション共通 */
+.home-page section {
+  padding: 60px 0;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 32px 0;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+/* お知らせセクション */
+.news-section {
+  background: var(--color-gray-100);
+}
+
+.news-list {
+  display: grid;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.news-item {
+  background: var(--color-white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.news-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.news-date {
+  display: block;
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin-bottom: 8px;
+}
+
+.news-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--color-primary);
+}
+
+.news-excerpt {
+  font-size: 16px;
+  color: var(--color-gray-700);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 試合結果セクション */
+.latest-game-section {
+  background: var(--color-white);
+}
+
+.latest-game-section .game-card {
+  background: linear-gradient(135deg, #f0f9f5 0%, #e8f5ed 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 600px;
+  margin: 0 auto !important;
+  display: block;
+}
+
+.latest-game-section .game-date {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.latest-game-section .game-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 16px;
+}
+
+.latest-game-section .team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.latest-game-section .team .team-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.latest-game-section .team .score {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.latest-game-section .vs {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-gray-600);
+}
+
+.latest-game-section .game-result {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-success);
+  background: rgba(109, 153, 59, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: inline-block;
+  width: 100%;
+}
+
+/* 次回試合セクション */
+.next-game-section {
+  background: var(--color-gray-100);
+}
+
+.schedule-card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.schedule-date {
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.schedule-date .month {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.schedule-date .day {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.schedule-details {
+  flex: 1;
+}
+
+.opponent {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: var(--color-primary);
+}
+
+.venue,
+.time {
+  font-size: 16px;
+  color: var(--color-gray-700);
+  margin: 8px 0;
+}
+
+/* クイックリンクセクション */
+.quick-links-section {
+  background: var(--color-white);
+}
+
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.quick-link-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid var(--color-gray-300);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.quick-link-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(109, 153, 59, 0.2);
+  border-color: var(--color-primary);
+}
+
+.quick-link-card .icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.quick-link-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--color-primary);
+}
+
+.quick-link-card p {
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .team-name {
+    font-size: 32px;
+  }
+
+  .team-slogan {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .game-card,
+  .schedule-card {
+    padding: 24px;
+  }
+
+  .team .score {
+    font-size: 36px;
+  }
+
+  .schedule-card {
+    flex-direction: column;
+  }
+
+  .schedule-date {
+    width: 100%;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .schedule-date .day {
+    font-size: 36px;
+  }
+
+  .quick-links-grid {
+    grid-template-columns: 1fr;
+  }
+}
