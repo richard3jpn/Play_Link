@@ -1,8 +1,8 @@
 extend type Query {
   """
-  ✨ Look up a single `Movie` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  ✨ Look up a single `Article` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
-  movie(
+  article(
     """
     The unique ID of the object.
     """
@@ -11,17 +11,17 @@ extend type Query {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: Article_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
-  ): Movie @fdc_generated(from: "Movie", purpose: QUERY_SINGLE)
+    first: Article_FirstRow
+  ): Article @fdc_generated(from: "Article", purpose: QUERY_SINGLE)
   """
-  ✨ Look up a single `MovieMetadata` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  ✨ Look up a single `Game` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
-  movieMetadata(
+  game(
     """
     The unique ID of the object.
     """
@@ -30,27 +30,141 @@ extend type Query {
     """
     The key used to identify the object.
     """
-    key: MovieMetadata_Key
+    key: Game_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: MovieMetadata_FirstRow
-  ): MovieMetadata @fdc_generated(from: "MovieMetadata", purpose: QUERY_SINGLE)
+    first: Game_FirstRow
+  ): Game @fdc_generated(from: "Game", purpose: QUERY_SINGLE)
   """
-  ✨ Look up a single `Review` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  ✨ Look up a single `GameLineup` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
-  review(
+  gameLineup(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
     """
     The key used to identify the object.
     """
-    key: Review_Key
+    key: GameLineup_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Review_FirstRow
-  ): Review @fdc_generated(from: "Review", purpose: QUERY_SINGLE)
+    first: GameLineup_FirstRow
+  ): GameLineup @fdc_generated(from: "GameLineup", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `GamePlay` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  gamePlay(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: GamePlay_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: GamePlay_FirstRow
+  ): GamePlay @fdc_generated(from: "GamePlay", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Player` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  player(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Player_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Player_FirstRow
+  ): Player @fdc_generated(from: "Player", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `PlayerStats` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  playerStats(
+    """
+    The key used to identify the object.
+    """
+    key: PlayerStats_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: PlayerStats_FirstRow
+  ): PlayerStats @fdc_generated(from: "PlayerStats", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Schedule` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  schedule(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Schedule_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Schedule_FirstRow
+  ): Schedule @fdc_generated(from: "Schedule", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Team` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  team(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Team_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Team_FirstRow
+  ): Team @fdc_generated(from: "Team", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `TeamMember` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  teamMember(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: TeamMember_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: TeamMember_FirstRow
+  ): TeamMember @fdc_generated(from: "TeamMember", purpose: QUERY_SINGLE)
   """
   ✨ Look up a single `User` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
@@ -58,12 +172,7 @@ extend type Query {
     """
     The unique ID of the object.
     """
-    id: String
-
-    """
-    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
-    """
-    id_expr: String_Expr
+    id: UUID
 
     """
     The key used to identify the object.
@@ -76,18 +185,18 @@ extend type Query {
     first: User_FirstRow
   ): User @fdc_generated(from: "User", purpose: QUERY_SINGLE)
   """
-  ✨ List `Movie` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ List `Article` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
-  movies(
+  articles(
     """
     Filter condition to narrow down the query results.
     """
-    where: Movie_Filter
+    where: Article_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [Movie_Order!]
+    orderBy: [Article_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -107,21 +216,21 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: Movie_Having
-  ): [Movie!]! @fdc_generated(from: "Movie", purpose: QUERY_MULTIPLE)
+    having: Article_Having
+  ): [Article!]! @fdc_generated(from: "Article", purpose: QUERY_MULTIPLE)
   """
-  ✨ List `MovieMetadata` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ List `Game` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
-  movieMetadatas(
+  games(
     """
     Filter condition to narrow down the query results.
     """
-    where: MovieMetadata_Filter
+    where: Game_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [MovieMetadata_Order!]
+    orderBy: [Game_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -141,21 +250,21 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: MovieMetadata_Having
-  ): [MovieMetadata!]! @fdc_generated(from: "MovieMetadata", purpose: QUERY_MULTIPLE)
+    having: Game_Having
+  ): [Game!]! @fdc_generated(from: "Game", purpose: QUERY_MULTIPLE)
   """
-  ✨ List `Review` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ List `GameLineup` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
-  reviews(
+  gameLineups(
     """
     Filter condition to narrow down the query results.
     """
-    where: Review_Filter
+    where: GameLineup_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [Review_Order!]
+    orderBy: [GameLineup_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -175,8 +284,212 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: Review_Having
-  ): [Review!]! @fdc_generated(from: "Review", purpose: QUERY_MULTIPLE)
+    having: GameLineup_Having
+  ): [GameLineup!]! @fdc_generated(from: "GameLineup", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `GamePlay` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  gamePlays(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: GamePlay_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [GamePlay_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: GamePlay_Having
+  ): [GamePlay!]! @fdc_generated(from: "GamePlay", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Player` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  players(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Player_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Player_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Player_Having
+  ): [Player!]! @fdc_generated(from: "Player", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `PlayerStats` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  playerStatss(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: PlayerStats_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [PlayerStats_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: PlayerStats_Having
+  ): [PlayerStats!]! @fdc_generated(from: "PlayerStats", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Schedule` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  schedules(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Schedule_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Schedule_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Schedule_Having
+  ): [Schedule!]! @fdc_generated(from: "Schedule", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Team` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  teams(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Team_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Team_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Team_Having
+  ): [Team!]! @fdc_generated(from: "Team", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `TeamMember` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  teamMembers(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: TeamMember_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [TeamMember_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: TeamMember_Having
+  ): [TeamMember!]! @fdc_generated(from: "TeamMember", purpose: QUERY_MULTIPLE)
   """
   ✨ List `User` objects in the table and return selected fields, optionally filtered by `where` conditions
   """

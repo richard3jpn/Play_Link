@@ -1,31 +1,85 @@
 extend type Mutation {
   """
-  ✨ Insert a single `Movie` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `Article` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movie_insert(
+  article_insert(
     """
     Data object to insert into the table.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput! @fdc_generated(from: "Movie", purpose: INSERT_SINGLE)
+    data: Article_Data!
+  ): Article_KeyOutput! @fdc_generated(from: "Article", purpose: INSERT_SINGLE)
   """
-  ✨ Insert a single `MovieMetadata` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `Game` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movieMetadata_insert(
+  game_insert(
     """
     Data object to insert into the table.
     """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput! @fdc_generated(from: "MovieMetadata", purpose: INSERT_SINGLE)
+    data: Game_Data!
+  ): Game_KeyOutput! @fdc_generated(from: "Game", purpose: INSERT_SINGLE)
   """
-  ✨ Insert a single `Review` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `GameLineup` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  review_insert(
+  gameLineup_insert(
     """
     Data object to insert into the table.
     """
-    data: Review_Data!
-  ): Review_KeyOutput! @fdc_generated(from: "Review", purpose: INSERT_SINGLE)
+    data: GameLineup_Data!
+  ): GameLineup_KeyOutput! @fdc_generated(from: "GameLineup", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `GamePlay` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  gamePlay_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: GamePlay_Data!
+  ): GamePlay_KeyOutput! @fdc_generated(from: "GamePlay", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Player` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  player_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Player_Data!
+  ): Player_KeyOutput! @fdc_generated(from: "Player", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `PlayerStats` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  playerStats_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: PlayerStats_Data!
+  ): PlayerStats_KeyOutput! @fdc_generated(from: "PlayerStats", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Schedule` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  schedule_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Schedule_Data!
+  ): Schedule_KeyOutput! @fdc_generated(from: "Schedule", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Team` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  team_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Team_Data!
+  ): Team_KeyOutput! @fdc_generated(from: "Team", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `TeamMember` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  teamMember_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: TeamMember_Data!
+  ): TeamMember_KeyOutput! @fdc_generated(from: "TeamMember", purpose: INSERT_SINGLE)
   """
   ✨ Insert a single `User` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -36,32 +90,86 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput! @fdc_generated(from: "User", purpose: INSERT_SINGLE)
   """
-  ✨ Insert `Movie` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert `Article` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movie_insertMany(
+  article_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [Movie_Data!]!
-  ): [Movie_KeyOutput!]! @fdc_generated(from: "Movie", purpose: INSERT_MULTIPLE)
+    data: [Article_Data!]!
+  ): [Article_KeyOutput!]! @fdc_generated(from: "Article", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert `MovieMetadata` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert `Game` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movieMetadata_insertMany(
+  game_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [MovieMetadata_Data!]!
-  ): [MovieMetadata_KeyOutput!]! @fdc_generated(from: "MovieMetadata", purpose: INSERT_MULTIPLE)
+    data: [Game_Data!]!
+  ): [Game_KeyOutput!]! @fdc_generated(from: "Game", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert `Review` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert `GameLineup` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  review_insertMany(
+  gameLineup_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [Review_Data!]!
-  ): [Review_KeyOutput!]! @fdc_generated(from: "Review", purpose: INSERT_MULTIPLE)
+    data: [GameLineup_Data!]!
+  ): [GameLineup_KeyOutput!]! @fdc_generated(from: "GameLineup", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `GamePlay` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  gamePlay_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [GamePlay_Data!]!
+  ): [GamePlay_KeyOutput!]! @fdc_generated(from: "GamePlay", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Player` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  player_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Player_Data!]!
+  ): [Player_KeyOutput!]! @fdc_generated(from: "Player", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `PlayerStats` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  playerStats_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [PlayerStats_Data!]!
+  ): [PlayerStats_KeyOutput!]! @fdc_generated(from: "PlayerStats", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Schedule` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  schedule_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Schedule_Data!]!
+  ): [Schedule_KeyOutput!]! @fdc_generated(from: "Schedule", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Team` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  team_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Team_Data!]!
+  ): [Team_KeyOutput!]! @fdc_generated(from: "Team", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `TeamMember` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  teamMember_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [TeamMember_Data!]!
+  ): [TeamMember_KeyOutput!]! @fdc_generated(from: "TeamMember", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `User` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -72,32 +180,86 @@ extend type Mutation {
     data: [User_Data!]!
   ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert or update a single `Movie` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Movie`.
+  ✨ Insert or update a single `Article` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Article`.
   """
-  movie_upsert(
+  article_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput! @fdc_generated(from: "Movie", purpose: UPSERT_SINGLE)
+    data: Article_Data!
+  ): Article_KeyOutput! @fdc_generated(from: "Article", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update a single `MovieMetadata` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MovieMetadata`.
+  ✨ Insert or update a single `Game` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Game`.
   """
-  movieMetadata_upsert(
+  game_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput! @fdc_generated(from: "MovieMetadata", purpose: UPSERT_SINGLE)
+    data: Game_Data!
+  ): Game_KeyOutput! @fdc_generated(from: "Game", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update a single `Review` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Review`.
+  ✨ Insert or update a single `GameLineup` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `GameLineup`.
   """
-  review_upsert(
+  gameLineup_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: Review_Data!
-  ): Review_KeyOutput! @fdc_generated(from: "Review", purpose: UPSERT_SINGLE)
+    data: GameLineup_Data!
+  ): GameLineup_KeyOutput! @fdc_generated(from: "GameLineup", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `GamePlay` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `GamePlay`.
+  """
+  gamePlay_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: GamePlay_Data!
+  ): GamePlay_KeyOutput! @fdc_generated(from: "GamePlay", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Player` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Player`.
+  """
+  player_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Player_Data!
+  ): Player_KeyOutput! @fdc_generated(from: "Player", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `PlayerStats` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `PlayerStats`.
+  """
+  playerStats_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: PlayerStats_Data!
+  ): PlayerStats_KeyOutput! @fdc_generated(from: "PlayerStats", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Schedule` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Schedule`.
+  """
+  schedule_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Schedule_Data!
+  ): Schedule_KeyOutput! @fdc_generated(from: "Schedule", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Team` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Team`.
+  """
+  team_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Team_Data!
+  ): Team_KeyOutput! @fdc_generated(from: "Team", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `TeamMember` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `TeamMember`.
+  """
+  teamMember_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: TeamMember_Data!
+  ): TeamMember_KeyOutput! @fdc_generated(from: "TeamMember", purpose: UPSERT_SINGLE)
   """
   ✨ Insert or update a single `User` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
   """
@@ -108,32 +270,86 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput! @fdc_generated(from: "User", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update `Movie` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Movie`.
+  ✨ Insert or update `Article` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Article`.
   """
-  movie_upsertMany(
+  article_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [Movie_Data!]!
-  ): [Movie_KeyOutput!]! @fdc_generated(from: "Movie", purpose: UPSERT_MULTIPLE)
+    data: [Article_Data!]!
+  ): [Article_KeyOutput!]! @fdc_generated(from: "Article", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Insert or update `MovieMetadata` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MovieMetadata`.
+  ✨ Insert or update `Game` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Game`.
   """
-  movieMetadata_upsertMany(
+  game_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [MovieMetadata_Data!]!
-  ): [MovieMetadata_KeyOutput!]! @fdc_generated(from: "MovieMetadata", purpose: UPSERT_MULTIPLE)
+    data: [Game_Data!]!
+  ): [Game_KeyOutput!]! @fdc_generated(from: "Game", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Insert or update `Review` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Review`.
+  ✨ Insert or update `GameLineup` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `GameLineup`.
   """
-  review_upsertMany(
+  gameLineup_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [Review_Data!]!
-  ): [Review_KeyOutput!]! @fdc_generated(from: "Review", purpose: UPSERT_MULTIPLE)
+    data: [GameLineup_Data!]!
+  ): [GameLineup_KeyOutput!]! @fdc_generated(from: "GameLineup", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `GamePlay` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `GamePlay`.
+  """
+  gamePlay_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [GamePlay_Data!]!
+  ): [GamePlay_KeyOutput!]! @fdc_generated(from: "GamePlay", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Player` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Player`.
+  """
+  player_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Player_Data!]!
+  ): [Player_KeyOutput!]! @fdc_generated(from: "Player", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `PlayerStats` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `PlayerStats`.
+  """
+  playerStats_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [PlayerStats_Data!]!
+  ): [PlayerStats_KeyOutput!]! @fdc_generated(from: "PlayerStats", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Schedule` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Schedule`.
+  """
+  schedule_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Schedule_Data!]!
+  ): [Schedule_KeyOutput!]! @fdc_generated(from: "Schedule", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Team` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Team`.
+  """
+  team_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Team_Data!]!
+  ): [Team_KeyOutput!]! @fdc_generated(from: "Team", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `TeamMember` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `TeamMember`.
+  """
+  teamMember_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [TeamMember_Data!]!
+  ): [TeamMember_KeyOutput!]! @fdc_generated(from: "TeamMember", purpose: UPSERT_MULTIPLE)
   """
   ✨ Insert or update `User` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
   """
@@ -144,9 +360,9 @@ extend type Mutation {
     data: [User_Data!]!
   ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Update a single `Movie` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Movie` or `null` if not found.
+  ✨ Update a single `Article` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Article` or `null` if not found.
   """
-  movie_update(
+  article_update(
     """
     The unique ID of the object.
     """
@@ -155,22 +371,22 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: Article_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
+    first: Article_FirstRow
 
     """
     Data object containing fields to be updated.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput @fdc_generated(from: "Movie", purpose: UPDATE_SINGLE)
+    data: Article_Data!
+  ): Article_KeyOutput @fdc_generated(from: "Article", purpose: UPDATE_SINGLE)
   """
-  ✨ Update a single `MovieMetadata` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `MovieMetadata` or `null` if not found.
+  ✨ Update a single `Game` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Game` or `null` if not found.
   """
-  movieMetadata_update(
+  game_update(
     """
     The unique ID of the object.
     """
@@ -179,37 +395,181 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: MovieMetadata_Key
+    key: Game_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: MovieMetadata_FirstRow
+    first: Game_FirstRow
 
     """
     Data object containing fields to be updated.
     """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput @fdc_generated(from: "MovieMetadata", purpose: UPDATE_SINGLE)
+    data: Game_Data!
+  ): Game_KeyOutput @fdc_generated(from: "Game", purpose: UPDATE_SINGLE)
   """
-  ✨ Update a single `Review` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Review` or `null` if not found.
+  ✨ Update a single `GameLineup` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `GameLineup` or `null` if not found.
   """
-  review_update(
+  gameLineup_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
     """
     The key used to identify the object.
     """
-    key: Review_Key
+    key: GameLineup_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Review_FirstRow
+    first: GameLineup_FirstRow
 
     """
     Data object containing fields to be updated.
     """
-    data: Review_Data!
-  ): Review_KeyOutput @fdc_generated(from: "Review", purpose: UPDATE_SINGLE)
+    data: GameLineup_Data!
+  ): GameLineup_KeyOutput @fdc_generated(from: "GameLineup", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `GamePlay` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `GamePlay` or `null` if not found.
+  """
+  gamePlay_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: GamePlay_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: GamePlay_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: GamePlay_Data!
+  ): GamePlay_KeyOutput @fdc_generated(from: "GamePlay", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Player` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Player` or `null` if not found.
+  """
+  player_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Player_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Player_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Player_Data!
+  ): Player_KeyOutput @fdc_generated(from: "Player", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `PlayerStats` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `PlayerStats` or `null` if not found.
+  """
+  playerStats_update(
+    """
+    The key used to identify the object.
+    """
+    key: PlayerStats_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: PlayerStats_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: PlayerStats_Data!
+  ): PlayerStats_KeyOutput @fdc_generated(from: "PlayerStats", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Schedule` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Schedule` or `null` if not found.
+  """
+  schedule_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Schedule_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Schedule_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Schedule_Data!
+  ): Schedule_KeyOutput @fdc_generated(from: "Schedule", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Team` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Team` or `null` if not found.
+  """
+  team_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Team_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Team_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Team_Data!
+  ): Team_KeyOutput @fdc_generated(from: "Team", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `TeamMember` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `TeamMember` or `null` if not found.
+  """
+  teamMember_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: TeamMember_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: TeamMember_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: TeamMember_Data!
+  ): TeamMember_KeyOutput @fdc_generated(from: "TeamMember", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `User` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `User` or `null` if not found.
   """
@@ -217,12 +577,7 @@ extend type Mutation {
     """
     The unique ID of the object.
     """
-    id: String
-
-    """
-    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
-    """
-    id_expr: String_Expr
+    id: UUID
 
     """
     The key used to identify the object.
@@ -240,13 +595,13 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput @fdc_generated(from: "User", purpose: UPDATE_SINGLE)
   """
-  ✨ Update `Movie` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update `Article` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  movie_updateMany(
+  article_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: Movie_Filter
+    where: Article_Filter
 
     """
     Set to true to update all rows.
@@ -256,16 +611,16 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: Movie_Data!
-  ): Int! @fdc_generated(from: "Movie", purpose: UPDATE_MULTIPLE)
+    data: Article_Data!
+  ): Int! @fdc_generated(from: "Article", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Update `MovieMetadata` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update `Game` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  movieMetadata_updateMany(
+  game_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: MovieMetadata_Filter
+    where: Game_Filter
 
     """
     Set to true to update all rows.
@@ -275,16 +630,16 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: MovieMetadata_Data!
-  ): Int! @fdc_generated(from: "MovieMetadata", purpose: UPDATE_MULTIPLE)
+    data: Game_Data!
+  ): Int! @fdc_generated(from: "Game", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Update `Review` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update `GameLineup` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  review_updateMany(
+  gameLineup_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: Review_Filter
+    where: GameLineup_Filter
 
     """
     Set to true to update all rows.
@@ -294,8 +649,122 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: Review_Data!
-  ): Int! @fdc_generated(from: "Review", purpose: UPDATE_MULTIPLE)
+    data: GameLineup_Data!
+  ): Int! @fdc_generated(from: "GameLineup", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `GamePlay` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  gamePlay_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: GamePlay_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: GamePlay_Data!
+  ): Int! @fdc_generated(from: "GamePlay", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Player` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  player_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Player_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Player_Data!
+  ): Int! @fdc_generated(from: "Player", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `PlayerStats` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  playerStats_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: PlayerStats_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: PlayerStats_Data!
+  ): Int! @fdc_generated(from: "PlayerStats", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Schedule` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  schedule_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Schedule_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Schedule_Data!
+  ): Int! @fdc_generated(from: "Schedule", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Team` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  team_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Team_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Team_Data!
+  ): Int! @fdc_generated(from: "Team", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `TeamMember` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  teamMember_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: TeamMember_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: TeamMember_Data!
+  ): Int! @fdc_generated(from: "TeamMember", purpose: UPDATE_MULTIPLE)
   """
   ✨ Update `User` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
@@ -316,9 +785,9 @@ extend type Mutation {
     data: User_Data!
   ): Int! @fdc_generated(from: "User", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Delete a single `Movie` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  ✨ Delete a single `Article` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
-  movie_delete(
+  article_delete(
     """
     The unique ID of the object.
     """
@@ -327,17 +796,17 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: Article_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
-  ): Movie_KeyOutput @fdc_generated(from: "Movie", purpose: DELETE_SINGLE)
+    first: Article_FirstRow
+  ): Article_KeyOutput @fdc_generated(from: "Article", purpose: DELETE_SINGLE)
   """
-  ✨ Delete a single `MovieMetadata` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  ✨ Delete a single `Game` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
-  movieMetadata_delete(
+  game_delete(
     """
     The unique ID of the object.
     """
@@ -346,27 +815,141 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: MovieMetadata_Key
+    key: Game_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: MovieMetadata_FirstRow
-  ): MovieMetadata_KeyOutput @fdc_generated(from: "MovieMetadata", purpose: DELETE_SINGLE)
+    first: Game_FirstRow
+  ): Game_KeyOutput @fdc_generated(from: "Game", purpose: DELETE_SINGLE)
   """
-  ✨ Delete a single `Review` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  ✨ Delete a single `GameLineup` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
-  review_delete(
+  gameLineup_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
     """
     The key used to identify the object.
     """
-    key: Review_Key
+    key: GameLineup_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Review_FirstRow
-  ): Review_KeyOutput @fdc_generated(from: "Review", purpose: DELETE_SINGLE)
+    first: GameLineup_FirstRow
+  ): GameLineup_KeyOutput @fdc_generated(from: "GameLineup", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `GamePlay` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  gamePlay_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: GamePlay_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: GamePlay_FirstRow
+  ): GamePlay_KeyOutput @fdc_generated(from: "GamePlay", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Player` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  player_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Player_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Player_FirstRow
+  ): Player_KeyOutput @fdc_generated(from: "Player", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `PlayerStats` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  playerStats_delete(
+    """
+    The key used to identify the object.
+    """
+    key: PlayerStats_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: PlayerStats_FirstRow
+  ): PlayerStats_KeyOutput @fdc_generated(from: "PlayerStats", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Schedule` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  schedule_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Schedule_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Schedule_FirstRow
+  ): Schedule_KeyOutput @fdc_generated(from: "Schedule", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Team` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  team_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Team_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Team_FirstRow
+  ): Team_KeyOutput @fdc_generated(from: "Team", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `TeamMember` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  teamMember_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: TeamMember_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: TeamMember_FirstRow
+  ): TeamMember_KeyOutput @fdc_generated(from: "TeamMember", purpose: DELETE_SINGLE)
   """
   ✨ Delete a single `User` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
@@ -374,12 +957,7 @@ extend type Mutation {
     """
     The unique ID of the object.
     """
-    id: String
-
-    """
-    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
-    """
-    id_expr: String_Expr
+    id: UUID
 
     """
     The key used to identify the object.
@@ -392,47 +970,131 @@ extend type Mutation {
     first: User_FirstRow
   ): User_KeyOutput @fdc_generated(from: "User", purpose: DELETE_SINGLE)
   """
-  ✨ Delete `Movie` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete `Article` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
-  movie_deleteMany(
+  article_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: Movie_Filter
+    where: Article_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "Movie", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "Article", purpose: DELETE_MULTIPLE)
   """
-  ✨ Delete `MovieMetadata` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete `Game` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
-  movieMetadata_deleteMany(
+  game_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: MovieMetadata_Filter
+    where: Game_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "MovieMetadata", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "Game", purpose: DELETE_MULTIPLE)
   """
-  ✨ Delete `Review` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete `GameLineup` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
-  review_deleteMany(
+  gameLineup_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: Review_Filter
+    where: GameLineup_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "Review", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "GameLineup", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `GamePlay` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  gamePlay_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: GamePlay_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "GamePlay", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Player` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  player_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Player_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Player", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `PlayerStats` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  playerStats_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: PlayerStats_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "PlayerStats", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Schedule` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  schedule_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Schedule_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Schedule", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Team` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  team_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Team_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Team", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `TeamMember` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  teamMember_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: TeamMember_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "TeamMember", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `User` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """

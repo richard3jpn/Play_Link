@@ -1,26 +1,80 @@
-extend type Movie {
+extend type Article {
   """
-  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  ✨ Implicit foreign key field based on `Article`.`author`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
   """
-  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "Movie", purpose: IMPLICIT_KEY_FIELD)
+  authorId: UUID! @fdc_generated(from: "Article.author", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Article`.`linkedGame`. It must match the value of `Game`.`id`. See `@ref` for how to customize it.
+  """
+  linkedGameId: UUID @fdc_generated(from: "Article.linkedGame", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Article`.`team`. It must match the value of `Team`.`id`. See `@ref` for how to customize it.
+  """
+  teamId: UUID! @fdc_generated(from: "Article.team", purpose: IMPLICIT_REF_FIELD)
 }
-extend type MovieMetadata {
+extend type Game {
   """
-  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  ✨ Implicit foreign key field based on `Game`.`schedule`. It must match the value of `Schedule`.`id`. See `@ref` for how to customize it.
   """
-  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "MovieMetadata", purpose: IMPLICIT_KEY_FIELD)
+  scheduleId: UUID @fdc_generated(from: "Game.schedule", purpose: IMPLICIT_REF_FIELD)
   """
-  ✨ Implicit foreign key field based on `MovieMetadata`.`movie`. It must match the value of `Movie`.`id`. See `@ref` for how to customize it.
+  ✨ Implicit foreign key field based on `Game`.`team`. It must match the value of `Team`.`id`. See `@ref` for how to customize it.
   """
-  movieId: UUID! @fdc_generated(from: "MovieMetadata.movie", purpose: IMPLICIT_REF_FIELD)
+  teamId: UUID! @fdc_generated(from: "Game.team", purpose: IMPLICIT_REF_FIELD)
 }
-extend type Review {
+extend type GameLineup {
   """
-  ✨ Implicit foreign key field based on `Review`.`movie`. It must match the value of `Movie`.`id`. See `@ref` for how to customize it.
+  ✨ Implicit foreign key field based on `GameLineup`.`game`. It must match the value of `Game`.`id`. See `@ref` for how to customize it.
   """
-  movieId: UUID! @fdc_generated(from: "Review.movie", purpose: IMPLICIT_REF_FIELD)
+  gameId: UUID! @fdc_generated(from: "GameLineup.game", purpose: IMPLICIT_REF_FIELD)
   """
-  ✨ Implicit foreign key field based on `Review`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  ✨ Implicit foreign key field based on `GameLineup`.`player`. It must match the value of `Player`.`id`. See `@ref` for how to customize it.
   """
-  userId: String! @fdc_generated(from: "Review.user", purpose: IMPLICIT_REF_FIELD)
+  playerId: UUID! @fdc_generated(from: "GameLineup.player", purpose: IMPLICIT_REF_FIELD)
+}
+extend type GamePlay {
+  """
+  ✨ Implicit foreign key field based on `GamePlay`.`batter`. It must match the value of `Player`.`id`. See `@ref` for how to customize it.
+  """
+  batterId: UUID! @fdc_generated(from: "GamePlay.batter", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `GamePlay`.`game`. It must match the value of `Game`.`id`. See `@ref` for how to customize it.
+  """
+  gameId: UUID! @fdc_generated(from: "GamePlay.game", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `GamePlay`.`pitcher`. It must match the value of `Player`.`id`. See `@ref` for how to customize it.
+  """
+  pitcherId: UUID @fdc_generated(from: "GamePlay.pitcher", purpose: IMPLICIT_REF_FIELD)
+}
+extend type Player {
+  """
+  ✨ Implicit foreign key field based on `Player`.`team`. It must match the value of `Team`.`id`. See `@ref` for how to customize it.
+  """
+  teamId: UUID! @fdc_generated(from: "Player.team", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Player`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: UUID @fdc_generated(from: "Player.user", purpose: IMPLICIT_REF_FIELD)
+}
+extend type PlayerStats {
+  """
+  ✨ Implicit foreign key field based on `PlayerStats`.`player`. It must match the value of `Player`.`id`. See `@ref` for how to customize it.
+  """
+  playerId: UUID! @fdc_generated(from: "PlayerStats.player", purpose: IMPLICIT_REF_FIELD)
+}
+extend type Schedule {
+  """
+  ✨ Implicit foreign key field based on `Schedule`.`team`. It must match the value of `Team`.`id`. See `@ref` for how to customize it.
+  """
+  teamId: UUID! @fdc_generated(from: "Schedule.team", purpose: IMPLICIT_REF_FIELD)
+}
+extend type TeamMember {
+  """
+  ✨ Implicit foreign key field based on `TeamMember`.`team`. It must match the value of `Team`.`id`. See `@ref` for how to customize it.
+  """
+  teamId: UUID! @fdc_generated(from: "TeamMember.team", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `TeamMember`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: UUID! @fdc_generated(from: "TeamMember.user", purpose: IMPLICIT_REF_FIELD)
 }

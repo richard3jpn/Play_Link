@@ -931,4 +931,136 @@ const result = await pool.query('SELECT * FROM teams');
 
 ---
 
+## 17. CI/CDベストプラクティス
+
+**参照**: `/docs/CICDtest.md`
+
+### 17.1. GitHub Actions設定
+
+#### CI ワークフロー
+`.github/workflows/ci.yml` を作成し、以下を自動化：
+
+**必須項目**:
+1. **ビルドテスト**（毎Push）
+   - React: `npm run build`
+   - Functions: `npm run build`
+2. **Lint**（毎Push）
+   - ESLint実行
+   - TypeScript型チェック
+3. **単体テスト**（毎Push）
+   - Jest実行
+   - カバレッジ80%以上を目標
+
+**推奨項目**:
+4. **E2Eテスト**（Pull Request時）
+   - Playwright実行
+   - 主要フロー（ログイン、スタメン登録、スコア入力）
+5. **セキュリティスキャン**（毎Push、週次）
+   - npm audit
+   - CodeQL（SAST）
+
+### 17.2. テスト戦略
+
+#### 優先順位
+1. **まず実装**: ビルド + Lint + 単体テスト
+2. **次に実装**: E2Eテスト（主要フロー）
+3. **余裕があれば**: セキュリティスキャン、パフォーマンステスト
+
+#### テストの自動化
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: cd app && npm ci && npm test && npm run build
+      - run: cd functions && npm ci && npm test && npm run build
+```
+
+### 17.3. デプロイ戦略
+
+#### ブランチ戦略
+- `main` - 本番環境（自動デプロイ）
+- `develop` - 開発環境（手動デプロイ）
+- `feature/*` - 機能開発（デプロイなし）
+
+#### デプロイフロー
+1. `feature/*` → `develop` へPR
+2. CI通過後にマージ
+3. `develop` で動作確認
+4. `develop` → `main` へPR
+5. CI通過 + レビュー完了後にマージ
+6. `main` へのマージで自動デプロイ
+
+---
+
+## 18. FinOps原則（コスト管理）
+
+**参照**: `/docs/FinOps.md`
+
+### 18.1. コスト管理の基本
+
+#### 核心原則：利用状況の帰属（Usage Attribution）
+すべてのリソースに**標準化されたタグ**を付与し、「誰が」「何の目的で」コストを使っているかを明確にする。
+
+#### 必須タグ
+| タグ | 説明 | 例 |
+|------|-----|-----|
+| `team` | 担当チーム | `baseball-ops` |
+| `project` | プロジェクト名 | `playlink` |
+| `env` | 環境 | `production`, `staging`, `development` |
+| `owner` | 責任者 | `manager@example.com` |
+
+### 18.2. Firebase無料枠の管理
+
+#### 無料枠上限
+- **Data Connect**: 月間10GB
+- **Cloud Functions**: 月間200万回呼び出し
+- **Hosting**: 10GB/月転送
+
+#### 超過を防ぐ対策
+1. **開発時はエミュレータを使用**
+   ```bash
+   npx firebase emulators:start
+   ```
+2. **クエリ最適化**
+   - 不要なフィールドを取得しない
+   - `limit` を使用してページネーション実装
+3. **Cloud Functionsのタイムアウト設定**
+   ```typescript
+   export const myFunction = functions
+     .runWith({ timeoutSeconds: 60, memory: '256MB' })
+     .https.onCall(async (data) => { /* ... */ });
+   ```
+
+### 18.3. コスト最適化チェックリスト
+
+#### 開発環境
+- [ ] ローカル開発はエミュレータ使用
+- [ ] テスト実行時もエミュレータ使用
+- [ ] 本番APIは最終確認時のみ使用
+
+#### 本番環境
+- [ ] 不要なログは削除または保存期間短縮
+- [ ] Data Connectクエリの最適化（N+1問題解消）
+- [ ] Cloud Functionsのメモリ・タイムアウト最適化
+- [ ] 終了したプロジェクトのリソース削除
+
+### 18.4. コスト監視
+
+#### Firebaseコンソールで監視
+- **使用量とお支払い** > 各サービスの使用量確認
+- **予算アラート** > 予算の50%, 90%, 100%で通知設定
+
+#### 目標
+Wix社の事例に倣い、**無駄なコストを50%削減**することを目指す。
+
+---
+
 **開発開始前に環境セットアップを完了してください！**
